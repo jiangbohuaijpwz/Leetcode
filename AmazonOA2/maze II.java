@@ -18,11 +18,9 @@ public class Solution {
     public int[] delataX = {0, 0, 1, -1};
     public int[] delataY = {1, -1, 0, 0};
   
-  // Maze 2:
   // When the ball stops, it could choose the next direction.
   // BFS + Memory
     public int shortestDistance(int[][] maze, int[] start, int[] destination) {
-        // write your code here
         if (maze == null || maze.length == 0 || maze[0].length == 0) return -1;
         if (maze[start[0]][start[1]] == 1 ||
             maze[destination[0]][destination[1]] == 1) return -1;
