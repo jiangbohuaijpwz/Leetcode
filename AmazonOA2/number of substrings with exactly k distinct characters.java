@@ -1,41 +1,26 @@
-import java.util.Arrays; 
-  
-public class CountKSubStr 
-{ 
-    int countkDist(String str, int k) 
-    { 
-        int res = 0; 
-        int n = str.length();  
-        int cnt[] = new int[26]; 
-        for (int i = 0; i < n; i++) 
-        { 
-            int dist_count = 0; 
-            Arrays.fill(cnt, 0); 
-            for (int j=i; j<n; j++) 
-            { 
-                // If this is a new character for this 
-                // substring, increment dist_count. 
-                if (cnt[str.charAt(j) - 'a'] == 0) 
-                    dist_count++; 
-  
-                // Increment count of current character 
-                cnt[str.charAt(j) - 'a']++; 
-                if (dist_count == k) 
-                    res++; 
-            } 
-        } 
-  
-        return res; 
-    } 
-  
-    // Driver Program 
-    public static void main(String[] args) 
-    { 
-        CountKSubStr ob = new CountKSubStr(); 
-        String ch = "abcbaa"; 
-        int k = 3; 
-        System.out.println("Total substrings with exactly " + 
-                           k +    " distinct characters : "
-                           + ob.countkDist(ch, k)); 
-    } 
+public class Solution {
+    /**
+     * @param stringIn: The original string.
+     * @param K: The length of substrings.
+     * @return: return the count of substring of length K and exactly K distinct characters.
+     */
+    public int KSubstring(String stringIn, int K) {
+        if (stringIn == null || stringIn.length() == 0) {
+            return -1;
+        }
+        int j = 0;
+        int n = stringIn.length();
+        HashSet<String> set = new HashSet<>();
+        HashMap<Character, Integer> map = new HashMap<>();
+        for (int i = 0; i < n; i++) {
+            if (map.containsKey(stringIn.charAt(i))) {
+                j = Math.max(j, map.get(stringIn.charAt(i)) + 1);
+            }
+            map.put(stringIn.charAt(i), i);
+            if (i - j + 1 >= K) {
+                set.add(stringIn.substring(j, i + 1));
+            }
+        }
+        return set.size();
+    }
 } 
