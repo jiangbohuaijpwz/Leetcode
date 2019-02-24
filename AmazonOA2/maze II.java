@@ -1,3 +1,4 @@
+// bfs + memo
 class Solution {
     int[] dx = new int[]{1,-1,0,0};
     int[] dy = new int[]{0,0,1,-1};
@@ -55,5 +56,47 @@ class Solution {
             }
         }
         return res[destination[0]][destination[1]];
+    }
+}
+
+
+// dfs + memorization;
+class Solution {
+    int[] dx = new int[]{1,-1,0,0};
+    int[] dy = new int[]{0,0,1,-1};
+    int m = 0, n = 0;
+    public int shortestDistance(int[][] maze, int[] start, int[] destination) {
+        if (maze == null || maze.length == 0 || maze[0] == null) {
+            return -1;
+        }
+        if (maze[start[0]][start[1]] == 1 || maze[destination[0]][destination[1]] == 1) {
+            return 0;
+        }
+        m = maze.length;
+        n = maze[0].length;
+        int[][] res = new int[m][n];
+        for (int i = 0; i < m; i++) {
+            Arrays.fill(res[i], Integer.MAX_VALUE);
+        }
+        res[start[0]][start[1]] = 0;
+        dfs(maze, start, res);
+        return res[destination[0]][destination[1]];   
+    }
+    
+    private void dfs(int[][] maze, int[] start, int[][] res) {
+        for (int i = 0; i < 4; i++) {
+            int count = 0;
+            int x = start[0] + dx[i];
+            int y = start[1] + dy[i];
+            while (x >= 0 && x < m && y >= 0 && y < n && maze[x][y] == 0) {
+                count++;
+                x += dx[i];
+                y += dy[i];
+            }
+            if (count + res[start[0]][start[1]] < res[x - dx[i]][y - dy[i]]) {    // stackoverflow if <= rather than <    !!!
+                res[x - dx[i]][y - dy[i]] = count + res[start[0]][start[1]];
+                dfs(maze, new int[]{x - dx[i], y - dy[i]}, res);
+            }
+        }
     }
 }
