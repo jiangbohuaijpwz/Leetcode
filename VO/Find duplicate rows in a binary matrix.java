@@ -1,6 +1,6 @@
 import java.io.*;
 import java.util.*;
-
+// time complextity : O(m * n)
 class Solution {
   public static class Trie {
     private class TrieNode {
